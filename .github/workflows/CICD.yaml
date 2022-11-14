@@ -1,0 +1,40 @@
+name: CWBD
+on:
+  push:
+    branches: [ main ]
+    paths:
+    - "code/**"
+    
+    schedule:
+    - cron: "0 15 * * 1-5"
+  pull_request:
+    branches: [main, satish-dev]
+jobs:
+  container-cwbd-job:
+    runs-on: ubuntu-latest
+    
+    container:
+      image: python:latest
+      options: --user root
+      
+      env:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v3 
+
+      - name: Check work folder
+        run: pwd
+
+      - name: run LS
+        run: ls -lrt
+
+      - name: run CWBD
+        run: python ./code/app.py && python ./code/empDetails.py
+      
+      - name: run CWBI
+        run: python ./code/slp.py
+
+      - name: check docker
+        run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
