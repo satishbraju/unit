@@ -41,3 +41,17 @@ jobs:
 
       - name: check docker
         run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
+      
+      -name: Dispatch
+       uses: actions/github-script@v6
+       with:
+        github-token: ${{ secrets.PAT_TOKEN }}
+        script: |
+          await github.rest.actions.createWorkflowDispatch({
+            owner: 'satishbraju',
+            repo: 'component',
+            workflow_id: 'update_repo.yaml',
+            ref:'main'
+          })
+
+
