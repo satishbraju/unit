@@ -36,5 +36,8 @@ jobs:
       - name: run CWBI
         run: python ./code/slp.py
 
+      - name: Check Git version
+        run: git -v
+
       - name: check docker
         run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
