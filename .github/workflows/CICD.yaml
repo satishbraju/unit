@@ -37,7 +37,7 @@ jobs:
         run: python ./code/slp.py
 
       - name: Check Git version
-        run: git -v
+        run: git --version
 
       - name: check docker
         run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
