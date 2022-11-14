@@ -44,12 +44,14 @@ jobs:
       
       - name: Dispatch
         uses: actions/github-script@v6
-        script: |
-          await github.rest.actions.createWorkflowDispatch({
-          owner: 'satishbraju',
-          repo: 'component',
-          workflow_id: 'update_repo.yaml',
-          ref:'main'
-          })
+        env:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+            owner: 'satishbraju',
+            repo: 'component',
+            workflow_id: 'update_repo.yaml',
+            ref:'main'
+            })
 
 
